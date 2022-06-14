@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description>Only future duedates allowed</description>
+        <field>due_date</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>Make due date of future </name>
+        <order/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+   if (isLoading || newValue === '') {
+      return;
+   }
+	var gax= new GlideAjax("IssuesDatetimeTuils");
+	gax.addParam('sysparm_name','checkDateBefore');
+	gax.addParam('sysparm_dateTime',newValue);
+	gax.getXML(callBack);
+   //Type appropriate comment here, and begin script below   
+}
+
+function callBack(response){
+	var answer = response.responseXML.documentElement.getAttribute("answer");
+	if(answer){
+		g_form.addErrorMessage("Pleack pick a date in future");
+		g_form.clearValue('due_date');
+	}
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-10 05:10:25</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>c98781f41b881510cfd37596cc4bcbe4</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>Make due date of future </sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Safety" source="x_828455_safety">875eb0701b081510cfd37596cc4bcb21</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Safety">875eb0701b081510cfd37596cc4bcb21</sys_scope>
+        <sys_update_name>sys_script_client_c98781f41b881510cfd37596cc4bcbe4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-10 05:37:37</sys_updated_on>
+        <table>x_828455_safety_issue</table>
+        <type>onChange</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>
